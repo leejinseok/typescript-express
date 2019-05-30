@@ -1,7 +1,12 @@
 'use strcit';
 
+import { Request, Response, NextFunction } from 'express';
 import productService from '../../services/product';
 
-export default (req, res, next) => {
-  res.json(productService.products(req.query));
+/**
+ * GET /api
+ * List of API examples.
+ */
+export default async (req: Request, res: Response, next: NextFunction) => {
+  res.json(await productService.products(req.query));
 }

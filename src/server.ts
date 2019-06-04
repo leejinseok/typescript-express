@@ -1,6 +1,7 @@
 'use strict';
 
 import express from 'express';
+import db from './database/db';
 import productController from './controllers/product';
 
 class Server {
@@ -8,6 +9,17 @@ class Server {
 
   constructor() {
     this.app = express();  
+  }
+
+  initializeDb(): void {
+    db.authenticate().then(
+      () => {
+        console.log('DB Connection has been established');
+      },
+      (err: any) => {
+        console.error('Unable to connect to the DB:', err);
+      },
+    );
   }
 
   middleware(): void {

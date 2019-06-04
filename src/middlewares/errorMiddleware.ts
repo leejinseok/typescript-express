@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
+'use strict';
 
-export default function (err: Error, req: Request, res: Response) {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-};
+import { Request, Response, NextFunction} from "express";
+
+export default function(err: Error, req: Request, res: Response, next: NextFunction) {
+  res.status(500).send('Something broken!');
+}

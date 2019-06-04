@@ -15,27 +15,27 @@ class User extends Model {
 
 User.init({
   id: {
-    type: DataTypes.INTEGER.UNSIGNED, // you can omit the `new` but this is discouraged
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
-    primaryKey: true,
+    primaryKey: true
   },
   name: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
+    allowNull: false
   },
   email: {
-    type: new DataTypes.STRING(128),
-    allowNull: false,
+    type: new DataTypes.STRING,
+    allowNull: false
   }
 }, {
   sequelize: db,
-  tableName: 'users',
+  tableName: 'users'
 });
 
 User.hasMany(Post, {
   sourceKey: 'id',
   foreignKey: 'ownerId',
-  as: 'posts' // this determines the name in `associations`!
+  as: 'posts'
 });
 
 export default User;

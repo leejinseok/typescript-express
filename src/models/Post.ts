@@ -15,21 +15,21 @@ class Post extends Model {
 
 Post.init({
   id: {
-    type: DataTypes.INTEGER.UNSIGNED, // you can omit the `new` but this is discouraged
+    type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
-    primaryKey: true,
+    primaryKey: true
   },
   ownerId: {
     type: DataTypes.INTEGER.UNSIGNED,
-    allowNull: false,
+    allowNull: false
   },
   name: {
-    type: new DataTypes.STRING(128),
-    allowNull: false,
+    type: new DataTypes.STRING,
+    allowNull: false
   }
 }, {
   sequelize: db,
-  tableName: 'posts',
+  tableName: 'posts'
 });
 
 export default Post;

@@ -12,7 +12,7 @@ class Server {
   app: express.Application;
 
   constructor() {
-    this.app = express();  
+    this.app = express();
   }
 
   initializeDb(): void {
@@ -20,7 +20,7 @@ class Server {
       () => {
         console.log('DB Connection has been established');
       },
-      (err: any) => {
+      (err: Error) => {
         console.error('Unable to connect to the DB:', err);
       },
     );
@@ -30,7 +30,6 @@ class Server {
     const { app } = this;
     app.use(accessMiddleware);
     app.get('/', (req: Request, res: Response, next: NextFunction) => {
-      return next(new Error('hi'));
       res.send('hello world');
     });
     app.get('/api/v1/products', productController);

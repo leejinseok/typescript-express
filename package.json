@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "serve": "node dist/server.js",
-    "serve-debug": "nodemon  --inspect=9226 dist/index.js",
-    "watch-ts": "tsc -w",
     "migrate": "node dist/database/sync.js",
+    "serve-debug": "nodemon --inspect=9226 --delay 1000ms dist/index.js",
+    "watch-ts": "tsc -w",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\"  \"npm run watch-ts\" \"npm run serve-debug\""
   },
   "author": "",
@@ -19,7 +19,6 @@
     "concurrently": "^4.1.0"
   },
   "dependencies": {
-    "@types/bluebird": "^3.5.27",
     "@types/validator": "^10.11.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",

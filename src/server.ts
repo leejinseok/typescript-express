@@ -2,6 +2,7 @@
 
 import express from 'express';
 import { Request, Response, NextFunction} from "express";
+import bodyParser from 'body-parser';
 import db from './database/db';
 
 import productController from './controllers/product';
@@ -28,15 +29,18 @@ class Server {
 
   middleware(): void {
     const { app } = this;
+    app.disable('x-powered-by');
+    app.use(bodyParser.urlencoded({extended: false, limit: '1mb'}));
+    app.use(bodyParser.json());
     app.use(accessMiddleware);
     app.get('/', (req: Request, res: Response, next: NextFunction) => {
-      res.send('hello world');
+      res.send('Hello world');
     });
     app.get('/api/v1/products', productController);
-    app.use(errorMiddleware);
     app.use((req: Request, res: Response) => {
       res.send('404 not found!');
     });
+    app.use(errorMiddleware);
   }
 
   listen(port: Number): void {

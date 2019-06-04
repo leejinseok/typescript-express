@@ -2,6 +2,6 @@
 
 import { Request, Response, NextFunction} from "express";
 
-export default function(err: Error, req: Request, res: Response, next: NextFunction) {
+export default (err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send('Something broken!');
 }

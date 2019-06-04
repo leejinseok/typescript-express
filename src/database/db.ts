@@ -1,3 +1,5 @@
+'use strict';
+
 import { Sequelize } from 'sequelize';
 const {
   MYSQL_HOST,

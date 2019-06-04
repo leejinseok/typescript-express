@@ -2,7 +2,7 @@
 
 import { Request, Response, NextFunction} from "express";
 
-export default function(req: Request, res: Response, next: NextFunction) {
+export default (req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
 
   res.setHeader('Access-Control-Allow-Origin', origin ? origin : '*');

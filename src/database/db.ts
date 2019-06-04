@@ -9,7 +9,7 @@ const {
   MYSQL_PORT,
 } = process.env;
 
-const db = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
+const db: Sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   'host': MYSQL_HOST,
   'dialect': 'mysql',
   port: +MYSQL_PORT,

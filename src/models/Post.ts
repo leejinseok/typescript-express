@@ -1,41 +1,35 @@
 'use strict';
 
-import { Sequelize, DataTypes, Model} from "sequelize";
+import { Sequelize, DataTypes, Model } from "sequelize";
 import db from "../database/db";
-import Post from "./Post";
+import User from "./User";
 
-class User extends Model {
+class Post extends Model {
   public id!: number;
-  public name!: string;
-  public email!: string;
+  public title!: string;
+  public content!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
 
-User.init({
+Post.init({
   id: {
     type: DataTypes.INTEGER.UNSIGNED, // you can omit the `new` but this is discouraged
     autoIncrement: true,
     primaryKey: true,
   },
-  name: {
+  ownerId: {
     type: DataTypes.INTEGER.UNSIGNED,
     allowNull: false,
   },
-  email: {
+  name: {
     type: new DataTypes.STRING(128),
     allowNull: false,
   }
 }, {
   sequelize: db,
-  tableName: 'users',
+  tableName: 'posts',
 });
 
-User.hasMany(Post, {
-  sourceKey: 'id',
-  foreignKey: 'ownerId',
-  as: 'posts' // this determines the name in `associations`!
-});
-
-export default User;
+export default Post;

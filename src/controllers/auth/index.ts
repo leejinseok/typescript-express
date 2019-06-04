@@ -15,7 +15,7 @@ class AuthController {
     router.post('/login', this.login);
   }
 
-  async login(req: Request, res: Response, next: NextFunction): Promise<any> {
+  async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       res.json(await authService.login());
     } catch(error) {

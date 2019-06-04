@@ -11,7 +11,7 @@ import accessMiddleware from "./middlewares/accessMiddleware";
 
 class Server {
   app: express.Application;
-  globalController: any;
+  globalController: GlobalController;
 
   constructor() {
     this.app = express();

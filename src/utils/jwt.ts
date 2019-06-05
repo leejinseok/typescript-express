@@ -10,8 +10,8 @@ class JwtUtil {
   static sign(user: any): Promise<any> {
     return new Promise((resolve, reject) => {
       jwt.sign({
-        id:user.id,
-        name:user.name,
+        id: user.id,
+        name: user.name,
         email: user.email
       },
       secret,
@@ -26,7 +26,7 @@ class JwtUtil {
     })
   }
 
-  static verify(token: string): any {
+  static verify(token: string): string | object {
     return jwt.verify(token, secret);
   }
 }

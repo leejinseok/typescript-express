@@ -2,6 +2,7 @@
 
 import { Sequelize, DataTypes, Model } from "sequelize";
 import db from "../database/db";
+import User from "./User";
 
 class Post extends Model {
   public id!: number;

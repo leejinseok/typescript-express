@@ -2,19 +2,21 @@
 
 import express from 'express';
 import { Request, Response, NextFunction} from "express";
-import authService from '../../services/auth';
+import AuthService from '../../services/auth';
 
 class AuthController {
   router: express.Router;
+  authService: AuthService;
 
   constructor() {
+    this.authService = new AuthService();
     this.router = express.Router();
     this.routes();
   }
 
   routes(): void {
-    this.router.post('/login', this.login);
-    this.router.post('/signup', this.signup);
+    this.router.post('/login', this.login.bind(this));
+    this.router.post('/signup', this.signup.bind(this));
   }
 
   async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -25,7 +27,7 @@ class AuthController {
         return;
       }
 
-      res.json(await authService.signup(email, name, password));
+      res.json(await this.authService.signup(email, name, password));
     } catch (error) {
       next(error);
     }
@@ -39,7 +41,7 @@ class AuthController {
         return;
       }
 
-      const token = await authService.login(email, password);
+      const token = await this.authService.login(email, password);
       res.cookie('access_token', token, {
         httpOnly: true,
         path: '/',

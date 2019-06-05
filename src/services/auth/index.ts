@@ -1,6 +1,5 @@
 'use strict';
 
-
 import SecurityUtil from '../../utils/security';
 import JwtUtil from '../../utils/jwt';
 import User from "../../models/User";
@@ -31,4 +30,4 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+export default AuthService;

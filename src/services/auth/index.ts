@@ -1,7 +1,8 @@
 'use strict';
 
 
-import securityUtil from '../../utils/security';
+import SecurityUtil from '../../utils/security';
+import JwtUtil from '../../utils/jwt';
 import User from "../../models/User";
 
 class AuthService {
@@ -11,8 +12,9 @@ class AuthService {
       return 'no exist user';
     }
 
-    const matched = await securityUtil.compare(password, user.password);
-    return matched;
+    if (await SecurityUtil.compare(password, user.password)) {
+      return JwtUtil.sign(user);
+    }
   }
 
   async signup(email: string, name: string, password: string): Promise<any> {
@@ -20,7 +22,7 @@ class AuthService {
       return 'already exist email';
     }
 
-    const hash = await securityUtil.createHash(password);
+    const hash = await SecurityUtil.createHash(password);
     return User.create({
       email,
       name,

@@ -3,10 +3,12 @@
 import express from 'express';
 import { Request, Response, NextFunction} from "express";
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import db from './database/db';
 
 import errorMiddleware from "./middlewares/errorMiddleware";
 import accessMiddleware from "./middlewares/accessMiddleware";
+import jwtMiddleware from './middlewares/jwtMiddleware';
 
 import GlobalController from "./controllers";
 
@@ -34,7 +36,9 @@ class Server {
     const { app, globalController } = this;
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
+    app.use(cookieParser());
     app.use(accessMiddleware);
+    app.use(jwtMiddleware);
     app.use('/api/v1', globalController.router);
     app.get('/', (req: Request, res: Response, next: NextFunction) => {
       res.send('Hello world');

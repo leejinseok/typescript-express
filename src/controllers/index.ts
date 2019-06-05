@@ -14,8 +14,7 @@ class GlobalController {
   }
 
   routes(): void {
-    const { router, authController } = this;
-    router.use('/auth', authController.router);
+    this.router.use('/auth', this.authController.router);
   }
 }
 

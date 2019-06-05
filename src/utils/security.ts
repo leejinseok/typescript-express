@@ -1,6 +1,7 @@
 'use strict';
 
 import crypto from 'crypto';
+
 const salt = 'rX6Puo7DUG6scyC7podB3eeYELFrWBkolVlGf2AAQoWMxYQHwElfd0IqgzYcDMmmb5k6fSA8XEYB3se12I5kLQ==';
 
 class SecurityUtil {
@@ -20,7 +21,6 @@ class SecurityUtil {
         resolve(key.toString('base64') === hash)
       });
     });
-
   }
 }
 

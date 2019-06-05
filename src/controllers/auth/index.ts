@@ -39,7 +39,14 @@ class AuthController {
         return;
       }
 
-      res.json(await authService.login(email, password));
+      const token = await authService.login(email, password);
+      res.cookie('access_token', token, {
+        httpOnly: true,
+        path: '/',
+        maxAge: 900000
+      });
+
+      res.send(token);
     } catch(error) {
       next(error);
     }

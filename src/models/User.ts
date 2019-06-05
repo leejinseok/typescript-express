@@ -8,6 +8,7 @@ class User extends Model {
   public id!: number;
   public name!: string;
   public email!: string;
+  public password!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -20,11 +21,15 @@ User.init({
     primaryKey: true
   },
   name: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.STRING,
     allowNull: false
   },
   email: {
-    type: new DataTypes.STRING,
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  password: {
+    type: DataTypes.STRING,
     allowNull: false
   }
 }, {

@@ -6,10 +6,6 @@ class GlobalController {
 
   constructor() {
     this.router = express.Router();
-    this.routes();
-  }
-
-  routes() {
     this.router.use('/auth', authController.router);
   }
 }

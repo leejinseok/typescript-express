@@ -31,10 +31,13 @@ class Server {
 
   middleware(): void {
     const { app, globalController } = this;
-    app.disable('x-powered-by');
-    app.use(bodyParser.urlencoded({extended: false, limit: '1mb'}));
     app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(accessMiddleware);
+    app.use((req, res, next) => {
+      console.log(req.body);
+      next();
+    });
     app.use('/api/v1', globalController.router);
     app.get('/', (req: Request, res: Response, next: NextFunction) => {
       res.send('Hello world');

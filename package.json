@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "node dist/server.js",
     "migrate": "node dist/database/sync.js",
-    "serve-debug": "nodemon --inspect=9226 --delay 3000ms dist/index.js",
+    "serve-debug": "nodemon --inspect=9226 --delay 1500ms dist/index.js",
     "watch-ts": "tsc -w",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"cyan.bold,green.bold\"  \"npm run watch-ts\" \"npm run serve-debug\""
   },
@@ -22,6 +22,7 @@
     "@types/bluebird": "^3.5.27",
     "@types/validator": "^10.11.0",
     "body-parser": "^1.19.0",
+    "crypto": "^1.0.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.0",
     "mysql2": "^1.6.5",

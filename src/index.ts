@@ -4,6 +4,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 import server from './server';
 
-server.initializeDb();
+server.initDb();
 server.middleware();
 server.listen(3002);

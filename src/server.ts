@@ -5,6 +5,7 @@ import { Request, Response, NextFunction} from "express";
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import db from './database/db';
+import {createConnection} from "typeorm";
 
 import errorMiddleware from "./middlewares/errorMiddleware";
 import accessMiddleware from "./middlewares/accessMiddleware";
@@ -19,6 +20,24 @@ class Server {
   constructor() {
     this.globalController = new GlobalController();
     this.app = express();
+  }
+
+  initDb(): void {
+    createConnection({
+      type: "mysql",
+      host: "localhost",
+      port: 3307,
+      username: "root",
+      password: "1111",
+      database: "blog",
+      entities: [
+        __dirname + "/entity/*.js"
+      ],
+      synchronize: true,
+    }).then(connection => {
+      console.log('connected');
+      // here you can start to work with your entities
+    }).catch(error => console.log(error));
   }
 
   initializeDb(): void {

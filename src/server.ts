@@ -31,6 +31,8 @@ class Server {
 
   middleware(): void {
     const { app, globalController } = this;
+    globalController.routes();
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(accessMiddleware);

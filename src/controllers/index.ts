@@ -1,12 +1,18 @@
 import express from 'express';
-import authController from './auth';
+import AuthController from './auth';
 
 class GlobalController {
   router: express.Router;
+  authController: AuthController;
 
   constructor() {
     this.router = express.Router();
-    this.router.use('/auth', authController.router);
+    this.authController = new AuthController();
+  }
+
+  routes(): void {
+    this.authController.routes();
+    this.router.use('/auth', this.authController.router);
   }
 }
 

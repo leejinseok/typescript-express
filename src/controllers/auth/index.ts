@@ -7,6 +7,9 @@ class AuthController {
 
   constructor() {
     this.router = express.Router();
+  }
+
+  routes(): void {
     this.router.post('/login', this.login);
     this.router.post('/signup', this.signup);
   }
@@ -29,6 +32,11 @@ class AuthController {
   async login(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const { email, password } = req.body;
+      if (!email || !password) {
+        res.status(400).send('Bad Request');
+        return;
+      }
+
       res.json(await authService.login(email, password));
     } catch(error) {
       next(error);
@@ -36,4 +44,4 @@ class AuthController {
   }
 }
 
-export default new AuthController();
+export default AuthController;

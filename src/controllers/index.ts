@@ -1,3 +1,5 @@
+'use strcit';
+
 import express from 'express';
 import AuthController from './auth';
 
@@ -6,13 +8,14 @@ class GlobalController {
   authController: AuthController;
 
   constructor() {
-    this.router = express.Router();
     this.authController = new AuthController();
+    this.router = express.Router();
+    this.routes();
   }
 
   routes(): void {
-    this.authController.routes();
-    this.router.use('/auth', this.authController.router);
+    const { router, authController } = this;
+    router.use('/auth', authController.router);
   }
 }
 

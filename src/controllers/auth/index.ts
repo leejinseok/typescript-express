@@ -1,3 +1,5 @@
+'use strict';
+
 import express from 'express';
 import { Request, Response, NextFunction} from "express";
 import authService from '../../services/auth';
@@ -7,6 +9,7 @@ class AuthController {
 
   constructor() {
     this.router = express.Router();
+    this.routes();
   }
 
   routes(): void {
@@ -24,7 +27,6 @@ class AuthController {
 
       res.json(await authService.signup(email, name, password));
     } catch (error) {
-      console.error(error);
       next(error);
     }
   }

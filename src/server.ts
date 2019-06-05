@@ -5,17 +5,18 @@ import { Request, Response, NextFunction} from "express";
 import bodyParser from 'body-parser';
 import db from './database/db';
 
-import GlobalController from './controllers';
 import errorMiddleware from "./middlewares/errorMiddleware";
 import accessMiddleware from "./middlewares/accessMiddleware";
+
+import GlobalController from "./controllers";
 
 class Server {
   app: express.Application;
   globalController: GlobalController;
 
   constructor() {
-    this.app = express();
     this.globalController = new GlobalController();
+    this.app = express();
   }
 
   initializeDb(): void {
@@ -31,15 +32,9 @@ class Server {
 
   middleware(): void {
     const { app, globalController } = this;
-    globalController.routes();
-
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(accessMiddleware);
-    app.use((req, res, next) => {
-      console.log(req.body);
-      next();
-    });
     app.use('/api/v1', globalController.router);
     app.get('/', (req: Request, res: Response, next: NextFunction) => {
       res.send('Hello world');
@@ -50,7 +45,7 @@ class Server {
     app.use(errorMiddleware);
   }
 
-  listen(port: Number): void {
+  listen(port: number): void {
     this.app.listen(port, () => {
       console.log(`http://localhost:${port}`);
     });

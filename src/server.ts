@@ -4,7 +4,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {createConnection} from "typeorm";
 import errorMiddleware from './middleware/errorMiddleware';
+import {useExpressServer} from "routing-controllers";
 import controller from './controller';
+import AuthController from "./controller/auth";
 
 class Server {
   app: express.Application;
@@ -33,7 +35,12 @@ class Server {
     const { app } = this;
     app.use(bodyParser.urlencoded({ extended: false, limit: '1mb' }));
     app.use(bodyParser.json());
-    app.use('/api/v1', controller);
+    // app.use('/api/v1', controller);
+    useExpressServer(app, {
+      controllers: [
+        AuthController
+      ]
+    })
     app.use(errorMiddleware);
     app.use((req, res, next) => {
       res.status(404).send('Not found page');

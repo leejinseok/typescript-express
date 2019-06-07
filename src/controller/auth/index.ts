@@ -1,36 +1,19 @@
 'use strict';
 
-import express from 'express';
-import { Request, Response, NextFunction } from "express";
-import AuthService from '../../service/auth';
-const router: express.Router = express.Router();
+import {Body, Controller, Get, Post} from "routing-controllers";
+import User from "../../entity/User";
+import {getRepository} from "typeorm";
 
-router.post('/signup', async (req: Request, res: Response, next: NextFunction) => {
-  const {email, name, password} = req.body;
-  try {
-    res.json(await new AuthService().signup(email, name, password));
-  } catch (error) {
-    next(error);
+@Controller('/api/v1/auth')
+export default class AuthController {
+
+  @Post('/login')
+  login(@Body() user: User) {
+    return user;
   }
-});
 
-router.post('/login', async (req, res, next) => {
-  const {email, password} = req.body;
-  try {
-    res.json(await new AuthService().login(email, password));
-  } catch (error) {
-    if (error.message === 'no exist user') {
-      res.status(401).send(error.message);
-      return;
-    }
-
-    if (error.message === 'password not matched') {
-      res.status(401).send(error.message);
-      return;
-    }
-
-    next(error);
+  @Post('/signup')
+  signup(@Body() user: User) {
+    return getRepository(User).save(user);
   }
-});
-
-export default router;
+}

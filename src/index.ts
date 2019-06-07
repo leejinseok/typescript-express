@@ -1,6 +1,7 @@
 'use strict';
 
 import Server from './server';
+import "reflect-metadata";
 
 async function init () {
   const server = new Server();

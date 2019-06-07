@@ -4,9 +4,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import {createConnection} from "typeorm";
 import errorMiddleware from './middleware/errorMiddleware';
-import {useExpressServer} from "routing-controllers";
-import controller from './controller';
-import AuthController from "./controller/auth";
+import {useExpressServer} from 'routing-controllers';
+import AuthController from './controller/auth';
+import PostController from './controller/post';
 
 class Server {
   app: express.Application;
@@ -38,7 +38,8 @@ class Server {
     // app.use('/api/v1', controller);
     useExpressServer(app, {
       controllers: [
-        AuthController
+        AuthController,
+        PostController
       ]
     })
     app.use(errorMiddleware);

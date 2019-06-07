@@ -1,42 +1,27 @@
 'use strict';
 
-import express from 'express';
-import {Request, Response, NextFunction} from "express";
-import PostService from "../../service/post";
-const router: express.Router = express.Router();
+import {Body, Controller, Get, Param, Post as PostMapping, QueryParam} from "routing-controllers";
+import Post from "../../entity/Post";
+import {getRepository} from "typeorm";
+import User from "../../entity/User";
 
-router.post('/', async (req: Request, res: Response, next: NextFunction) => {
-  const {title, content, userId} = req.body;
-  try {
-    res.json(await new PostService().addPost(title, content, userId));
-  } catch (error) {
-    next(error);
+@Controller('/api/v1/posts')
+export default class PostController {
+
+  @PostMapping()
+  async addPost(@Body() post: Post) {
+    const user = await getRepository(User).findOne({ where: { id: post.user }});
+    post.user = user;
+    return getRepository(Post).save(post);
   }
-});
 
-router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.json(await new PostService().findPosts(0, 10));
-  } catch (error) {
-    next(error);
+  @Get()
+  async findAll(@QueryParam("cursor") cursor: number, @QueryParam("offset") offset: number) {
+    return getRepository(Post).find({ skip: cursor, take: offset });
   }
-});
 
-router.get('/:postId', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.json(await new PostService().findPost(req.params.postId));
-  } catch (error) {
-    next(error);
+  @Get('/:postId')
+  async findOne(@Param("postId") postId: number) {
+    return getRepository(Post).find({ where: { id: postId }});
   }
-});
-
-router.delete('/:postId', async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    await new PostService().deletePost(req.params.postId);
-    res.send('success');
-  } catch (error) {
-    next(error);
-  }
-});
-
-export default router;
+}

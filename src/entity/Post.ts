@@ -27,6 +27,7 @@ class Post {
   @BeforeInsert()
   private beforeInsert() {
     this.createdAt = DateUtils.time();
+    this.updatedAt = DateUtils.time();
   }
 }
 

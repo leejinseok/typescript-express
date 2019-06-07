@@ -1,8 +1,7 @@
 'use strict';
 
-import DatabaseUtil from "../../util/database";
 import User from '../../entity/User';
-import {Connection, getConnection} from "typeorm";
+import {getRepository} from "typeorm";
 import SecurityUtil from "../../util/security";
 
 class AuthService {
@@ -14,15 +13,11 @@ class AuthService {
     user.name = name;
     user.password = password;
 
-    const connection = await getConnection();
-    const userRepository = connection.getRepository(User);
-    return userRepository.save(user);
+    return getRepository(User).save(user);
   }
 
   async login (email: string, password: string): Promise<any> {
-    const connection = await getConnection();
-    const userRepository = connection.getRepository(User);
-    const user = await userRepository.findOne({ where: { email }});
+    const user = await getRepository(User).findOne({ where: { email }});
 
     if (!user) {
       throw new Error('no exist user');

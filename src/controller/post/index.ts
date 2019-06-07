@@ -7,15 +7,27 @@ const router: express.Router = express.Router();
 
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   const {title, content, userId} = req.body;
-  res.json(await new PostService().addPost(title, content, userId));
+  try {
+    res.json(await new PostService().addPost(title, content, userId));
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
-  res.json(await new PostService().findPosts(0, 10));
-})
+  try {
+    res.json(await new PostService().findPosts(0, 10));
+  } catch (error) {
+    next(error);
+  }
+});
 
 router.get('/:postId', async (req: Request, res: Response, next: NextFunction) => {
-  res.json(await new PostService().findPost(req.params.postId));
+  try {
+    res.json(await new PostService().findPost(req.params.postId));
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.delete('/:postId', async (req: Request, res: Response, next: NextFunction) => {
@@ -25,6 +37,6 @@ router.delete('/:postId', async (req: Request, res: Response, next: NextFunction
   } catch (error) {
     next(error);
   }
-})
+});
 
 export default router;

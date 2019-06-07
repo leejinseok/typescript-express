@@ -3,6 +3,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {createConnection} from "typeorm";
+import errorMiddleware from './middleware/errorMiddleware';
 import controller from './controller';
 
 class Server {
@@ -32,6 +33,7 @@ class Server {
     app.use(bodyParser.urlencoded({ extended: false, limit: '1mb' }));
     app.use(bodyParser.json());
     app.use('/api/v1', controller);
+    app.use(errorMiddleware);
     app.use((req, res, next) => {
       res.status(404).send('Not found page');
     });

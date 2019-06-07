@@ -5,7 +5,6 @@
   "username": "root",
   "password": "1111",
   "database": "blog",
-  "synchronize": true,
   "logging": false,
   "entities": [
     "src/entity/**/*.ts"

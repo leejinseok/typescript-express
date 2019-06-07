@@ -1,9 +1,9 @@
 'use strict';
 
-import dotenv from 'dotenv';
-dotenv.config();
-import server from './server';
+import Server from './server';
+const server = new Server();
 
-server.initDb();
-server.middleware();
-server.listen(3002);
+server.syncDb();
+server.init();
+server.run(3002);
+

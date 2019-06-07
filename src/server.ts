@@ -12,8 +12,8 @@ class Server {
     this.app = express();
   }
 
-  syncDb():void {
-    createConnection({
+  async syncDb(): Promise<any> {
+    await createConnection({
       type: "mysql",
       host: "localhost",
       port: 3307,
@@ -24,8 +24,9 @@ class Server {
         __dirname + "/entity/*.js"
       ],
       synchronize: false,
-    }).then(connection => {
-    }).catch(error => console.log(error));
+    });
+
+    console.log('데이터베이스 연결성공');
   }
 
   init(): void {
@@ -41,7 +42,7 @@ class Server {
 
   run(port: number): void {
     this.app.listen(port, () => {
-      console.log(`http://localhost:${port}`);
+      console.log(`api server running on http://localhost:${port}`);
     });
   }
 }

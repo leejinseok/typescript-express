@@ -1,9 +1,14 @@
 'use strict';
 
 import Server from './server';
-const server = new Server();
 
-server.syncDb();
-server.init();
-server.run(3002);
+async function init () {
+  const server = new Server();
+  await server.syncDb();
+  server.init();
+  server.run(3002);
+}
+
+init();
+
 

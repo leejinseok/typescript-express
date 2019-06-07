@@ -1,6 +1,6 @@
 'use strict';
 
-import {BeforeInsert, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import DateUtils from "../util/date";
 import User from "./User";
 
@@ -27,6 +27,11 @@ class Post {
   @BeforeInsert()
   private beforeInsert() {
     this.createdAt = DateUtils.time();
+    this.updatedAt = DateUtils.time();
+  }
+
+  @BeforeUpdate()
+  private beforeUpdate() {
     this.updatedAt = DateUtils.time();
   }
 }

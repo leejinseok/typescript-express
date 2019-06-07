@@ -1,6 +1,6 @@
 'use strict';
 
-import {Body, Controller, Delete, Get, Param, Post as PostMapping, QueryParam} from "routing-controllers";
+import {Body, Controller, Delete, Get, Param, Post as PostMapping, Put, QueryParam} from "routing-controllers";
 import Post from "../../entity/Post";
 import {getRepository} from "typeorm";
 import User from "../../entity/User";
@@ -28,5 +28,11 @@ export default class PostController {
   @Delete("/:postId")
   delete(@Param("postId") postId: number) {
     return getRepository(Post).delete(postId);
+  }
+
+  @Put('/:postId')
+  updatePost(@Param("postId") postId: number, @Body() post: Post) {
+    post.id = postId;
+    return getRepository(Post).save(post);
   }
 }

@@ -22,7 +22,7 @@ class Server {
       entities: [
         __dirname + "/entity/*.js"
       ],
-      synchronize: true,
+      synchronize: false,
     }).then(connection => {
     }).catch(error => console.log(error));
   }

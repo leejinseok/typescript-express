@@ -1,6 +1,6 @@
 'use strict';
 
-import {Body, Controller, Get, Param, Post as PostMapping, QueryParam} from "routing-controllers";
+import {Body, Controller, Delete, Get, Param, Post as PostMapping, QueryParam} from "routing-controllers";
 import Post from "../../entity/Post";
 import {getRepository} from "typeorm";
 import User from "../../entity/User";
@@ -16,12 +16,17 @@ export default class PostController {
   }
 
   @Get()
-  async findAll(@QueryParam("cursor") cursor: number, @QueryParam("offset") offset: number) {
+  findAll(@QueryParam("cursor") cursor: number = 0, @QueryParam("offset") offset: number = 10) {
     return getRepository(Post).find({ skip: cursor, take: offset });
   }
 
   @Get('/:postId')
-  async findOne(@Param("postId") postId: number) {
+  findOne(@Param("postId") postId: number) {
     return getRepository(Post).find({ where: { id: postId }});
+  }
+
+  @Delete("/:postId")
+  delete(@Param("postId") postId: number) {
+    return getRepository(Post).delete(postId);
   }
 }

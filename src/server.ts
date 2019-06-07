@@ -2,11 +2,12 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import morgan from 'morgan';
 import {createConnection} from "typeorm";
-import errorMiddleware from './middleware/errorMiddleware';
 import {useExpressServer} from 'routing-controllers';
 import AuthController from './controller/auth';
 import PostController from './controller/post';
+import CustomErrorHandler from "./middleware/customErrorHandler";
 
 class Server {
   app: express.Application;
@@ -33,18 +34,17 @@ class Server {
 
   init(): void {
     const { app } = this;
+    app.use(morgan('tiny'));
     app.use(bodyParser.urlencoded({ extended: false, limit: '1mb' }));
     app.use(bodyParser.json());
-    // app.use('/api/v1', controller);
     useExpressServer(app, {
       controllers: [
         AuthController,
         PostController
+      ],
+      middlewares: [
+        CustomErrorHandler
       ]
-    })
-    app.use(errorMiddleware);
-    app.use((req, res, next) => {
-      res.status(404).send('Not found page');
     });
   }
 

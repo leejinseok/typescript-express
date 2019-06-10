@@ -25,6 +25,9 @@ class User {
   @Column()
   updatedAt: number;
 
+  @OneToMany(type => Post, post => post.user)
+  posts: Post[];
+
   @BeforeInsert()
   private async beforeInsert() {
     this.password = await SecurityUtil.createdHash(this.password);
@@ -36,10 +39,6 @@ class User {
   private beforeUpdate() {
     this.updatedAt = Date.now();
   }
-
-  @OneToMany(type => Post, post => post.user)
-  posts: Post[];
-
 }
 
 export default User;

@@ -44,7 +44,8 @@ class Server {
       ],
       middlewares: [
         CustomErrorHandler
-      ]
+      ],
+      defaultErrorHandler: false
     });
   }
 

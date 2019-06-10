@@ -1,18 +1,17 @@
 'use strict';
 
-import {Body, Controller, Get, Middleware, Post, UseAfter} from "routing-controllers";
+import {Request} from "express";
+import {Body, Controller, Get, Middleware, Post, Req, UseAfter} from "routing-controllers";
 import User from "../../entity/User";
 import {getRepository} from "typeorm";
 import SecurityUtil from "../../util/security";
-import CustomErrorHandler from "../../middleware/customErrorHandler";
 
 @Controller('/api/v1/auth')
 export default class AuthController {
 
   @Post('/login')
-  async login(@Body() user: User): Promise<User | string> {
-    throw new Error("hi");
-
+  async login(@Body() user: User, @Req() req: Request): Promise<User | string> {
+    console.log(req.user);
     const {email, password} = user;
     user = await getRepository(User).findOne({ where: { email }});
 

@@ -22,7 +22,12 @@ export default class PostController {
 
   @Get('/:postId')
   findOne(@Param("postId") postId: number) {
-    return getRepository(Post).find({ where: { id: postId }});
+    return getRepository(Post).find({
+      where: { id: postId },
+      relations: [
+        "user"
+      ]
+    });
   }
 
   @Delete("/:postId")

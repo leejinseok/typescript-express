@@ -6,8 +6,8 @@ import User from "./User";
 
 @Entity({name: 'posts'})
 class Post {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({type: "bigint"})
+  id: bigint;
 
   @Column()
   title: string;

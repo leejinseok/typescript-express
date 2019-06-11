@@ -1,13 +1,12 @@
 'use strict';
 
 import {Body, Controller, Delete, Get, Param, Post as PostMapping, Put, QueryParam} from "routing-controllers";
-import Post from "../../entity/Post";
+import Post from "../entity/Post";
 import {getRepository} from "typeorm";
-import User from "../../entity/User";
+import User from "../entity/User";
 
 @Controller('/api/v1/posts')
 export default class PostController {
-
   @PostMapping()
   async addPost(@Body() post: Post) {
     const user = await getRepository(User).findOne({ where: { id: post.user }});
@@ -36,7 +35,7 @@ export default class PostController {
   }
 
   @Put('/:postId')
-  updatePost(@Param("postId") postId: number, @Body() post: Post) {
+  updatePost(@Param("postId") postId: bigint, @Body() post: Post) {
     post.id = postId;
     return getRepository(Post).save(post);
   }

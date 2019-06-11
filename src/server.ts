@@ -5,9 +5,10 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import {createConnection} from "typeorm";
 import {useExpressServer} from 'routing-controllers';
-import AuthController from './controller/auth';
-import PostController from './controller/post';
+import AuthController from './controller/authController';
+import PostController from './controller/postController';
 import CustomErrorHandler from "./middleware/customErrorHandler";
+import UserControler from "./controller/userController";
 
 class Server {
   app: express.Application;
@@ -26,7 +27,7 @@ class Server {
       entities: [
         __dirname + "/entity/*.js"
       ],
-      synchronize: false,
+      synchronize: true,
     });
 
     console.log('데이터베이스 연결성공');
@@ -40,7 +41,8 @@ class Server {
     useExpressServer(app, {
       controllers: [
         AuthController,
-        PostController
+        PostController,
+        UserControler
       ],
       middlewares: [
         CustomErrorHandler

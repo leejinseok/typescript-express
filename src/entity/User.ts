@@ -1,14 +1,24 @@
 'use strict';
 
-import {BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import SecurityUtil from "../util/security";
 import DateUtils from "../util/date";
 import Post from "./Post";
+import UserImage from "./UserImage";
 
 @Entity({name: 'users'})
 class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn({type: "bigint"})
+  id: bigint;
 
   @Column()
   email: string;
@@ -27,6 +37,12 @@ class User {
 
   @OneToMany(type => Post, post => post.user)
   posts: Post[];
+
+  @OneToOne(type => UserImage, userImage => userImage.user, {
+    cascade: true
+  })
+  @JoinColumn()
+  userImage: UserImage;
 
   @BeforeInsert()
   private async beforeInsert() {

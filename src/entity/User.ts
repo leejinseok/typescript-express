@@ -15,7 +15,7 @@ import DateUtils from "../util/date";
 import Post from "./Post";
 import UserImage from "./UserImage";
 
-@Entity({name: 'users'})
+@Entity({name: "users"})
 class User {
   @PrimaryGeneratedColumn({type: "bigint"})
   id: bigint;
@@ -39,14 +39,15 @@ class User {
   posts: Post[];
 
   @OneToOne(type => UserImage, userImage => userImage.user, {
-    cascade: true
+    cascade: true,
+    onDelete: "SET NULL"
   })
   @JoinColumn()
   userImage: UserImage;
 
   @BeforeInsert()
   private async beforeInsert() {
-    this.password = await SecurityUtil.createdHash(this.password);
+    this.password = await SecurityUtil.createHash(this.password);
     this.createdAt = DateUtils.time();
     this.updatedAt = DateUtils.time();
   }

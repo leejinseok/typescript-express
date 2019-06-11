@@ -5,7 +5,7 @@ import Post from "../entity/Post";
 import {getRepository} from "typeorm";
 import User from "../entity/User";
 
-@Controller('/api/v1/posts')
+@Controller("/api/v1/posts")
 export default class PostController {
   @PostMapping()
   async addPost(@Body() post: Post) {
@@ -19,7 +19,7 @@ export default class PostController {
     return getRepository(Post).find({ skip: cursor, take: offset });
   }
 
-  @Get('/:postId')
+  @Get("/:postId")
   findOne(@Param("postId") postId: number) {
     return getRepository(Post).find({
       where: { id: postId },
@@ -34,7 +34,7 @@ export default class PostController {
     return getRepository(Post).delete(postId);
   }
 
-  @Put('/:postId')
+  @Put("/:postId")
   updatePost(@Param("postId") postId: bigint, @Body() post: Post) {
     post.id = postId;
     return getRepository(Post).save(post);

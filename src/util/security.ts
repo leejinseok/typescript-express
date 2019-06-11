@@ -7,7 +7,7 @@ const salt = 'lZbFGVi6kVRWTOYsvDPU4CcTA1qsEiaTdJQtLGIN/0xPS9sO3IgHLaRAmjkGS5rAj0
 class SecurityUtil {
   constructor() {}
 
-  static async createdHash(password: string): Promise<string> {
+  static async createHash(password: string): Promise<string> {
     return new Promise((resolve, reject) => {
       crypto.pbkdf2(password, salt, 100000, 64, 'sha512', (err, key) => {
         resolve(key.toString('base64'));

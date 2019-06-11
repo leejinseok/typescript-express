@@ -5,7 +5,7 @@ import {getRepository} from "typeorm";
 import User from "../entity/User";
 import UserImage from "../entity/UserImage";
 
-@Controller('/api/v1/users')
+@Controller("/api/v1/users")
 export default class UserControler {
 
   @Get()
@@ -17,7 +17,7 @@ export default class UserControler {
     })
   }
 
-  @Post('/user_image')
+  @Post("/image")
   async uploadUserImage() {
     const userImage = new UserImage();
     userImage.user = await getRepository(User).findOne(1);
